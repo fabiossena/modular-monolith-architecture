@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ModularMonolith.Shared.Platform</RootNamespace>
+    <AssemblyName>ModularMonolith.Shared.Platform</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.22" />
+  </ItemGroup>
+
+  <!-- ASP.NET Core types are used only by the current-user adapter. -->
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Kernel\ModularMonolith.Shared.Kernel\ModularMonolith.Shared.Kernel.csproj" />
+  </ItemGroup>
+
+  <!--
+    Shared technical plumbing that crosses module boundaries:
+      * the single SQLite connection that makes cross-module transactions possible
+      * the transaction coordinator every module context enlists with
+      * the in-process domain event dispatcher
+    It contains NO business rules.
+  -->
+
+</Project>

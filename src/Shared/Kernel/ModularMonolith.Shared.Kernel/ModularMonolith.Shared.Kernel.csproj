@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ModularMonolith.Shared.Kernel</RootNamespace>
+    <AssemblyName>ModularMonolith.Shared.Kernel</AssemblyName>
+  </PropertyGroup>
+
+  <!--
+    The Kernel is deliberately dependency-free: no EF Core, no ASP.NET Core,
+    no module references. It only carries generic primitives that every
+    bounded context may reuse.
+  -->
+
+</Project>

@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ModularMonolith.Modules.Inventory</RootNamespace>
+    <AssemblyName>ModularMonolith.Modules.Inventory</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ModularMonolith.Modules.Inventory.Contracts\ModularMonolith.Modules.Inventory.Contracts.csproj" />
+    <ProjectReference Include="..\..\Catalog\ModularMonolith.Modules.Catalog.Contracts\ModularMonolith.Modules.Catalog.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Kernel\ModularMonolith.Shared.Kernel\ModularMonolith.Shared.Kernel.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Platform\ModularMonolith.Shared.Platform\ModularMonolith.Shared.Platform.csproj" />
+  </ItemGroup>
+
+  <!-- The Api folder of the module exposes minimal API endpoints. -->
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+</Project>

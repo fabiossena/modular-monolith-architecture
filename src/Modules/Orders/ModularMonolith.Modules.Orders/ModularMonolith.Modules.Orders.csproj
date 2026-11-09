@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ModularMonolith.Modules.Orders</RootNamespace>
+    <AssemblyName>ModularMonolith.Modules.Orders</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ModularMonolith.Modules.Orders.Contracts\ModularMonolith.Modules.Orders.Contracts.csproj" />
+    <ProjectReference Include="..\..\Cart\ModularMonolith.Modules.Cart.Contracts\ModularMonolith.Modules.Cart.Contracts.csproj" />
+    <ProjectReference Include="..\..\Inventory\ModularMonolith.Modules.Inventory.Contracts\ModularMonolith.Modules.Inventory.Contracts.csproj" />
+    <ProjectReference Include="..\..\Payments\ModularMonolith.Modules.Payments.Contracts\ModularMonolith.Modules.Payments.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Kernel\ModularMonolith.Shared.Kernel\ModularMonolith.Shared.Kernel.csproj" />
+    <ProjectReference Include="..\..\..\Shared\Platform\ModularMonolith.Shared.Platform\ModularMonolith.Shared.Platform.csproj" />
+  </ItemGroup>
+
+  <!-- The Api folder of the module exposes minimal API endpoints. -->
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+</Project>

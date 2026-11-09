@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ModularMonolith.Modules.Orders.Contracts</RootNamespace>
+    <AssemblyName>ModularMonolith.Modules.Orders.Contracts</AssemblyName>
+  </PropertyGroup>
+
+  <!--
+    The ONLY assembly of the Orders module that other modules may reference.
+    It intentionally depends on nothing else: the checkout vocabulary is
+    owned by Orders, the modules it drives are reached through their own
+    contracts.
+  -->
+
+</Project>

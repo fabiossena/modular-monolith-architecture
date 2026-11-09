@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ModularMonolith.Modules.Catalog.Contracts</RootNamespace>
+    <AssemblyName>ModularMonolith.Modules.Catalog.Contracts</AssemblyName>
+  </PropertyGroup>
+
+  <!--
+    The ONLY assembly of the Catalog module that other modules may reference.
+    Everything else (Domain / Application / Infrastructure / Api) stays private.
+    The kernel is referenced for the domain event contract only.
+  -->
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\Kernel\ModularMonolith.Shared.Kernel\ModularMonolith.Shared.Kernel.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Modular Monolith Store</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>&#128722;</text></svg>" />
+    <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ------------------------------------------------------------------ -->
+<!-- Login                                                              -->
+<!-- ------------------------------------------------------------------ -->
+<section id="login-view" class="login-view">
+    <div class="login-card">
+        <div class="brand">
+            <span class="brand-mark">&#128722;</span>
+            <div>
+                <h1>Modular Monolith Store</h1>
+                <p class="muted">One process &middot; six bounded contexts &middot; one database</p>
+            </div>
+        </div>
+
+        <form id="login-form" autocomplete="off">
+            <label for="login-email">E-mail</label>
+            <input id="login-email" type="email" value="buyer@store.com" required />
+
+            <label for="login-password">Password</label>
+            <input id="login-password" type="password" value="Buyer@123" required />
+
+            <p id="login-error" class="error hidden"></p>
+
+            <button type="submit" class="primary block">Sign in</button>
+        </form>
+
+        <div class="demo-accounts">
+            <p class="muted small">Demo accounts</p>
+            <button type="button" class="ghost" data-demo-email="buyer@store.com" data-demo-password="Buyer@123">
+                <strong>Buyer</strong><span>buyer@store.com</span>
+            </button>
+            <button type="button" class="ghost" data-demo-email="admin@store.com" data-demo-password="Admin@123">
+                <strong>Administrator</strong><span>admin@store.com</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- ------------------------------------------------------------------ -->
+<!-- Application                                                        -->
+<!-- ------------------------------------------------------------------ -->
+<section id="app-view" class="app-view hidden">
+
+    <header class="topbar">
+        <div class="brand small">
+            <span class="brand-mark">&#128722;</span>
+            <strong>Modular Monolith Store</strong>
+        </div>
+
+        <nav id="tabs" class="tabs">
+            <button type="button" class="tab active" data-view="catalog">Catalog</button>
+            <button type="button" class="tab" data-view="cart">Cart <span id="cart-badge" class="badge hidden">0</span></button>
+            <button type="button" class="tab buyer-only" data-view="orders">My orders</button>
+            <button type="button" class="tab admin-only hidden" data-view="inventory">Inventory</button>
+            <button type="button" class="tab admin-only hidden" data-view="purchases">Purchases</button>
+            <button type="button" class="tab admin-only hidden" data-view="new-product">New product</button>
+        </nav>
+
+        <div class="session">
+            <span id="session-user" class="session-user"></span>
+            <span id="session-role" class="role-badge"></span>
+            <button type="button" id="logout" class="ghost small-button">Sign out</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Catalog ---------------------------------------------------- -->
+        <section id="view-catalog" class="view">
+            <div class="view-head">
+                <h2>Catalog</h2>
+                <div class="filters">
+                    <input id="search" type="search" placeholder="Search a product&hellip;" />
+                    <select id="category"><option value="">All categories</option></select>
+                </div>
+            </div>
+            <div id="product-grid" class="product-grid"></div>
+        </section>
+
+        <!-- Cart ------------------------------------------------------- -->
+        <section id="view-cart" class="view hidden">
+            <div class="view-head">
+                <h2>Cart</h2>
+                <button type="button" id="clear-cart" class="ghost small-button">Empty the cart</button>
+            </div>
+            <div id="cart-lines" class="cart-lines"></div>
+            <div class="cart-total">
+                <span>Total</span>
+                <strong id="cart-total">R$ 0,00</strong>
+            </div>
+            <button type="button" id="checkout" class="primary">Finalize the order</button>
+        </section>
+
+        <!-- My orders -------------------------------------------------- -->
+        <section id="view-orders" class="view hidden">
+            <div class="view-head">
+                <h2>My orders</h2>
+                <button type="button" id="refresh-orders" class="ghost small-button">Refresh</button>
+            </div>
+            <div id="order-list" class="order-list"></div>
+        </section>
+
+        <!-- Inventory (admin) ------------------------------------------- -->
+        <section id="view-inventory" class="view hidden">
+            <div class="view-head">
+                <h2>Inventory</h2>
+                <button type="button" id="refresh-inventory" class="ghost small-button">Refresh</button>
+            </div>
+            <div id="inventory-kpis" class="kpis"></div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th><th>SKU</th><th class="right">Stock</th>
+                        <th class="right">Reorder level</th><th>State</th><th class="right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="inventory-rows"></tbody>
+            </table>
+        </section>
+
+        <!-- Purchases (admin) ------------------------------------------- -->
+        <section id="view-purchases" class="view hidden">
+            <div class="view-head">
+                <h2>What was bought</h2>
+                <button type="button" id="refresh-purchases" class="ghost small-button">Refresh</button>
+            </div>
+            <div id="purchase-kpis" class="kpis"></div>
+            <div id="purchase-list" class="order-list"></div>
+        </section>
+
+        <!-- New product (admin) ----------------------------------------- -->
+        <section id="view-new-product" class="view hidden">
+            <div class="view-head">
+                <h2>Add a production</h2>
+            </div>
+            <form id="product-form" class="form-card">
+                <div class="grid-2">
+                    <div>
+                        <label for="p-sku">SKU</label>
+                        <input id="p-sku" required placeholder="KB-001" />
+                    </div>
+                    <div>
+                        <label for="p-name">Name</label>
+                        <input id="p-name" required placeholder="Keyboard" />
+                    </div>
+                </div>
+                <label for="p-description">Description</label>
+                <input id="p-description" placeholder="What the product is" />
+
+                <div class="grid-3">
+                    <div>
+                        <label for="p-category">Category</label>
+                        <input id="p-category" required placeholder="Peripherals" list="category-list" />
+                        <datalist id="category-list"></datalist>
+                    </div>
+                    <div>
+                        <label for="p-emoji">Emoji</label>
+                        <input id="p-emoji" placeholder="&#128421;" />
+                    </div>
+                    <div>
+                        <label for="p-price">Price</label>
+                        <input id="p-price" type="number" step="0.01" min="0" value="0.00" required />
+                    </div>
+                </div>
+
+                <div class="grid-2">
+                    <div>
+                        <label for="p-stock">Initial stock</label>
+                        <input id="p-stock" type="number" step="1" min="0" value="0" required />
+                    </div>
+                    <div>
+                        <label for="p-reorder">Reorder level</label>
+                        <input id="p-reorder" type="number" step="1" min="0" value="5" required />
+                    </div>
+                </div>
+
+                <p id="product-error" class="error hidden"></p>
+                <button type="submit" class="primary">Add to the catalog</button>
+            </form>
+        </section>
+    </main>
+</section>
+
+<!-- ------------------------------------------------------------------ -->
+<!-- Checkout modal                                                     -->
+<!-- ------------------------------------------------------------------ -->
+<div id="checkout-modal" class="modal hidden">
+    <div class="modal-card">
+        <header>
+            <h3>Finalize the order</h3>
+            <button type="button" id="checkout-close" class="ghost small-button">Close</button>
+        </header>
+
+        <form id="checkout-form">
+            <div class="grid-2">
+                <div>
+                    <label for="c-name">Full name</label>
+                    <input id="c-name" required />
+                </div>
+                <div>
+                    <label for="c-email">E-mail</label>
+                    <input id="c-email" type="email" required />
+                </div>
+            </div>
+
+            <label for="c-address">Address</label>
+            <input id="c-address" required />
+
+            <div class="grid-2">
+                <div>
+                    <label for="c-city">City</label>
+                    <input id="c-city" required />
+                </div>
+                <div>
+                    <label for="c-zip">Zip code</label>
+                    <input id="c-zip" required />
+                </div>
+            </div>
+
+            <label for="c-method">Payment method</label>
+            <select id="c-method"></select>
+
+            <label class="checkbox">
+                <input id="c-fail" type="checkbox" />
+                <span>Simulate a payment failure (the order is cancelled and the stock is kept)</span>
+            </label>
+
+            <p id="checkout-error" class="error hidden"></p>
+
+            <button type="submit" class="primary block">Pay and place the order</button>
+        </form>
+    </div>
+</div>
+
+<div id="toast" class="toast hidden"></div>
+
+<script src="app.js"></script>
+</body>
+</html>

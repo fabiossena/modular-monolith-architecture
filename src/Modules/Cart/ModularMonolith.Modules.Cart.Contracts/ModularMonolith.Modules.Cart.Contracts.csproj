@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ModularMonolith.Modules.Cart.Contracts</RootNamespace>
+    <AssemblyName>ModularMonolith.Modules.Cart.Contracts</AssemblyName>
+  </PropertyGroup>
+
+  <!--
+    The ONLY assembly of the Cart module that other modules may reference.
+    It intentionally depends on nothing else: the cart speaks in its own
+    vocabulary and reaches the other modules through their own contracts.
+  -->
+
+</Project>
